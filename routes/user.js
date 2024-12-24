@@ -4,8 +4,6 @@ const User = require("../schema/user.schema");
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const dotenv = require('dotenv');
-const userSchema = require('../schema/user.schema');
-
 dotenv.config();
 
 
@@ -18,6 +16,19 @@ router.get('/',async (req,res)=>{
         res.status({message: err});
     }
 })
+
+router.get('/:id',async (req,res)=>{
+    try {
+        // const user = await User.findOne({ _id: id });
+        const id = req.params.id;
+        const user = await User.findById(id);
+        res.status(200).send(user);
+    }
+    catch(err){
+        res.status({message: err});
+    }
+})
+
 
 router.post('/register',async (req,res)=>{
     
